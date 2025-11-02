@@ -1,31 +1,41 @@
-/*
 package Stack;
-
-
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
-class Pair<K,V>{
-    private K key;
-    private K value;
-
-}
-
-public class StockSpanner {Stack<Pair<Integer,Integer>> stack;
+class StockSpanner {
+    List<Integer> prices;
 
     public StockSpanner() {
-        stack = new Stack<>();
+        prices = new ArrayList<>();
     }
 
     public int next(int price) {
-        int count = 1;
-        while(!stack.isEmpty() && stack.peek().getKey() <= price){
-            count = count + stack.pop().getValue();
+        prices.add(price);
+        int span = 1;
+
+        for (int i = prices.size() - 2; i >= 0; i--) {
+            if (prices.get(i) <= price) {
+                span++;
+            } else {
+                break;
+            }
         }
 
-        stack.push(new Pair(price, count));
-        return count;
+        return span;
     }
 
+    public static void main(String[] args) {
+        StockSpanner stockSpanner = new StockSpanner();
+
+        System.out.println(stockSpanner.next(100)); // 1
+        System.out.println(stockSpanner.next(80));  // 1
+        System.out.println(stockSpanner.next(60));  // 1
+        System.out.println(stockSpanner.next(70));  // 2
+        System.out.println(stockSpanner.next(60));  // 1
+        System.out.println(stockSpanner.next(75));  // 4
+        System.out.println(stockSpanner.next(85));  // 6
+
+    }
 }
-*/
+
